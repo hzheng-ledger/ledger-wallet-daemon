@@ -16,6 +16,12 @@ case class ERC20BalanceNotEnough(tokenAddress: String, balance: BigInt, need: Bi
     val code = ErrorCodes.ERC20_BALANCE_NOT_ENOUGH
   } with DaemonException(msg)
 
+case class ERC20UnknownContract(contract: String)
+  extends {
+    val msg = s"Unknown contract $contract for the account"
+    val code = ErrorCodes.ERC20_UNKNOWN_CONTRACT
+  } with DaemonException(msg)
+
 case class AmountNotEnoughToActivateAccount(currency: Currency, minimalAmount: Amount)
   extends {
     private val currencyUnit = currency.getUnits.asScala.drop(1).head
@@ -131,6 +137,7 @@ object ErrorCodes {
   val SIGNATURE_SIZE_UNMATCH = 101
   val ERC20_BALANCE_NOT_ENOUGH = 102
   val AMOUNT_NOT_ENOUGH_TO_ACTIVATE_ACCOUNT = 103
+  val ERC20_UNKNOWN_CONTRACT = 104
   val ERC20_NOT_FOUND = 200
   val ACCOUNT_NOT_FOUND = 201
   val OPERATION_NOT_FOUND = 202
